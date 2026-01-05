@@ -1,0 +1,160 @@
+
+" === MANUAL CONFIGURATION PART START ===
+"
+" IDE settings -> Keymap -> (Up, Down) -> (<C-k>, <C-j>) or (<C-p>, <C-n>) as mappings from
+" vim.rc were not working in GUI parts of IDE.
+" 
+" On windows turn off bells on escape
+"
+" OS globally mapped escape to capslock recommended
+"
+" Relative line numbers (hybrid in IDE settings)
+"
+" === MANUAL CONFIGURATION PART END ===
+
+
+
+" === IDEA VIM RC PART START ===
+
+set scrolloff=5
+
+" mapping leader to space
+let mapleader=" "
+nnoremap <Space> <Nop>
+" 2 seconds for leader sequence
+set timeoutlen=2000
+
+" --- plugins start ---
+" additionally highlighted yank
+Plug 'machakann/vim-highlightedyank'
+
+" making operations on whole file easier
+Plug 'kana/vim-textobj-entire'
+
+" navigation in project tree
+" it is possible to make project window floating. It will behave like rest of
+" pop-up windows
+Plug 'preservim/nerdtree'
+nmap <leader>x :NERDTreeToggle<CR>
+
+" mappings to easily delete, change and add surroundings in pairs
+Plug 'tpope/vim-surround'
+
+" enable case-sensitive search when uppercase letter is present
+set smartcase
+
+" searching but it uses two characters instead of one and it expands to
+" multiple lines - alternative to f/F using s/S
+set sneak
+
+" incrementally highlight searched pattern in real time
+set incsearch
+
+" highlight all found items once search command is done
+set hlsearch
+noremap <Esc> :nohlsearch<CR>
+" === plugins end ===
+
+
+" === additional settings start ===
+
+" sync clipboard between VIM and OS
+set clipboard^=unnamed,unnamedplus
+
+" make it possible to jump between angle brackets
+set matchpairs+=<:>
+
+" method up and method down actions
+nmap [[ <Action>(MethodUp)
+nmap ]] <Action>(MethodDown)
+
+" popup with explorer of recently opened files
+map <C-;> <Action>(RecentFiles)
+" === additional settings end ===
+
+
+" === intelij actions to leader mappings start ===
+
+" project navigation leader mappings
+"
+" find any class in your project by name
+map <leader>fc <Action>(GotoClass)
+" find any file in your project by name
+map <leader>ff <Action>(GotoFile)
+" find code symbols
+map <leader>fs <Action>(GotoSymbol)
+" find classes, files, symbols, settings, actions and more (combined)
+map <leader>fe <Action>(SearchEverywhere)
+" find text across all files in your project
+map <leader>ft <Action>(FindInPath)
+
+
+" code navigation leader mappings
+"
+" jumps where the symbol (variable, function, class, method etc) is
+" declared/defined - alternative to vim gd with some differences - just to be
+" consistent
+nmap <leader>gd <Action>(GotoDeclaration)
+" jumps to the type declaration of the symbol under the cursor (definition of
+" method return type)
+nmap <leader>gt <Action>(GotoTypeDeclaration)
+" jumps to the implementation(s) of the interface or abstract
+nmap <leader>gi <Action>(GotoImplementation)
+" lists all usages/occurrences of the symbol under the cursor
+nmap <leader>gu <Action>(ShowUsages)
+" jumps to connected test class or vice versa
+nmap <leader>gut <Action>(GotoTest)
+" jumps back to the previus location in the navigation history (after jumps or
+" searches) - alternative to <C-o> with some differences
+nmap <leader>gp <Action>(Back)
+" jumps forwart to next location in the navigation history
+nmap <leader>gn <Action>(Forward)
+" jumps to related file
+nmap <leader>gr <Action>(GoToRelated)
+
+
+" popup with recently visited locations in code
+map <leader>ll <Action>(RecentLocations)
+map <leader>lc <Action>(JumpToLastChange)
+
+map <leader>en <Action>(GotoNextError)
+map <leader>ep <Action>(GotoPreviousError)
+
+map <leader>hi <Action>(ShowHoverInfo)
+
+map <leader>cl <Action>(CommentByLineComment)
+map <leader>cb <Action>(CommentByBlockComment)
+
+map <leader>rc <Action>(ReformatCode)
+map <leader>ri <Action>(OptimizeImports)
+map <leader>gc <Action>(Generate)
+
+" rename in intelij switches to insert mode. going back to normal mode
+" disables rename action so we need to navigate somehow <C-h> <C-l>
+map <leader>rn <Action>(RenameElement)
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+
+
+" widow navigation
+"
+" moving between window splits: <C-w> h, <C-w> j, <C-w> k, <C-w> l
+map <leader>wv <Action>(SplitVertically)
+map <leader>wh <Action>(SplitHorizontally)
+" unsplit that disables all unfocused windows, execute only when focued on
+" window you want to stay on
+map <leader>wq <Action>(Unsplit)
+" close active tab
+map <leader>q <Action>(CloseContent)
+
+
+" bookmarks navigation
+"
+" show bookmark panel (shows also vim marks)
+map <leader>sb <Action>(ShowBookmarks)
+
+" ungrouped - more leader mappings
+"
+" add breakpoint to line where the cursor is
+map <leader>bp <Action>(ToggleLineBreakpoint)
+" === intelij actions to leader mappings end ===
